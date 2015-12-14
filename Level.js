@@ -1,6 +1,6 @@
 var level = function(canvas){
     this.dots       = [
-        new Dot(canvas,30,30),
+        
         new Dot(canvas,70,30),
         new Dot(canvas,110,30),
         new Dot(canvas,150,30),
@@ -10,7 +10,7 @@ var level = function(canvas){
         new Dot(canvas,310,30),
         new Dot(canvas,350,30),
         new Dot(canvas,390,30),
-        new Dot(canvas,430,30),
+        new Dot(canvas,430,30,true),
         new Dot(canvas,470,30),
         new Dot(canvas,510,30),
         new Dot(canvas,550,30),
@@ -28,7 +28,7 @@ var level = function(canvas){
         new Dot(canvas,470,70),
         new Dot(canvas,510,70),
         new Dot(canvas,550,70),
-        new Dot(canvas,30 ,110),
+        new Dot(canvas,30 ,110,true),
         new Dot(canvas,70 ,110),
         new Dot(canvas,110,110),
         new Dot(canvas,150,110),
@@ -46,7 +46,7 @@ var level = function(canvas){
         new Dot(canvas,70, 150),
         new Dot(canvas,110,150),
         new Dot(canvas,150,150),
-        new Dot(canvas,190,150),
+        new Dot(canvas,190,150,true),
         new Dot(canvas,230,150),
         //new Dot(canvas,270,150),
         //new Dot(canvas,310,150),
@@ -164,6 +164,22 @@ var level = function(canvas){
         [10+(40*8),10+(40*3),'h'],
         [10+(40*8),10+(40*1),'v'],
         [10+(40*8),10+(40*2),'v'],
+        
+        /* bottom right weird cross */
+        [10+(40*11),10+(40*8),'h'],
+        [10+(40*12),10+(40*8),'v'],
+        [10+(40*11),10+(40*10),'v'],
+        [10+(40*10),10+(40*9),'h'],
+        [10+(40*12),10+(40*9),'v'],
+        [10+(40*10),10+(40*10),'h'],
+        [10+(40*11),10+(40*11),'v'],
+        [10+(40*11),10+(40*12),'h'],
+        [10+(40*12),10+(40*11),'v'],
+        [10+(40*12),10+(40*11),'h'],
+        [10+(40*13),10+(40*10),'v'],
+        [10+(40*12),10+(40*10),'h'],
+        [10+(40*11),10+(40*8),'v'],
+        [10+(40*10),10+(40*9),'v'],
     ]
     
     

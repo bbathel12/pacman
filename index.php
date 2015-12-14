@@ -29,13 +29,12 @@
             var game = new PacManGame(c);
             /*var p = new PacMan();
             p.draw(c);*/
-            $(document).keyup(function(event){game.moveHandler(event)})
+            $(document).keydown(function(event){game.moveHandler(event)})
             var chomp = document.getElementById('chomp'); 
             var frames = setInterval(
                 function(){
                     game.drawLevel(0);
                     chomp.play();
-                    game.onADot();
                     game.showScore();
                     game.showLives();
                     game.isOver();
