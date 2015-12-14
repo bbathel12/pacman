@@ -37,24 +37,28 @@ var PacManGame = function(canvas){
                     if (this.validMove('left')) {
                         game.drawLevel(0);
                         game.pacman.move('left')
+                        game.onADot();
                     }
                 }
                 else if (event.keyCode == right) {
                     if(this.validMove('right')){
                         game.drawLevel(0);
                         game.pacman.move('right')
+                        game.onADot();
                     }
                 }
                 else if (event.keyCode == down) {
                     if(this.validMove('down')){
                         game.drawLevel(0);
                         game.pacman.move('down')
+                        game.onADot();
                     }
                 }
                 else if (event.keyCode == up) {
                     if(this.validMove('up')){
                         game.drawLevel(0);
                         game.pacman.move('up')
+                        game.onADot();
                     }
                 }
                 
@@ -148,7 +152,7 @@ var PacManGame = function(canvas){
     
     this.isOver = function(){
         if (this.levels[0].dots.length <= 0 ) {
-            $(document).off('keyup');
+            $(document).off('keydown');
             canvas.fillStyle  ="orange";
             canvas.strokeStyle="red";
             canvas.font="75px Courier New"

@@ -8,9 +8,16 @@ var Dot = function(canvas,x,y,power){
             var x = this.position[0];
             var y = this.position[1];
             canvas.beginPath();
-            canvas.strokeStyle = 'yellow'
-            canvas.fillStyle   = 'yellow'
-            canvas.arc(x,y,5,0,Math.PI * 2)
+            if (this.power) {
+                canvas.strokeStyle = 'white'
+                canvas.fillStyle   = 'white'
+                canvas.arc(x,y,7,0,Math.PI * 2)
+            }else{
+                canvas.strokeStyle = 'yellow'
+                canvas.fillStyle   = 'yellow'
+                canvas.arc(x,y,5,0,Math.PI * 2)
+            }
+            
             canvas.fill();
             canvas.stroke();
         }
