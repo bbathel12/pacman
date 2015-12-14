@@ -1,14 +1,14 @@
 var PacManGame = function(canvas){
     
     this.levels = [];
-    this.pacman = new PacMan('brice','3',canvas);
+    this.pacman = new PacMan('brice',3,canvas);
     this.levels[0] = new level(canvas);
     this.score  = 0;
     
     
     /* draws a black background */
     this.drawBackground = function(){
-        canvas.fillStyle = "rgba(0,0,0,.5)";
+        canvas.fillStyle = "rgba(0,0,0,.45)";
         canvas.fillRect(0, 0, 600, 600);
     }
     
@@ -32,7 +32,7 @@ var PacManGame = function(canvas){
             var right = 39 ;
             var down  = 40 ;
             var up    = 38 ;
-                //console.log(event.keyCode)
+                ////console.log(event.keyCode)
                 if (event.keyCode == left) {
                     if (this.validMove('left')) {
                         game.drawLevel(0);
@@ -86,14 +86,14 @@ var PacManGame = function(canvas){
             wallDirection = this.levels[0].walls[i][2]
             if (direction === 'down') {
                 if (
-                        (pacY+20 === wallY)
+                        (wallY -20 === pacY)
                         &&
-                        (pacX-20 === wallX)
+                        ((wallX+1) <= pacX && pacX <= (wallX + 39))
                         &&
                         (wallDirection === 'h')
                     ) {
-                    console.log("y's ",pacY + 20," ",wallY);
-                    console.log("x's ",pacX - 20," ",wallX);
+                    //console.log("y's ",pacY + 20," ",wallY);
+                    //console.log("x's ",pacX - 20," ",wallX);
                     return false;
                 }
             }
@@ -105,34 +105,34 @@ var PacManGame = function(canvas){
                         &&
                         (wallDirection === 'h')
                     ) {
-                    console.log("y's ",pacY ," ",wallY);
-                    console.log("x's ",pacX ," ",wallX);
+                    //console.log("y's ",pacY ," ",wallY);
+                    //console.log("x's ",pacX ," ",wallX);
                     return false;
                 }
             }
             else if (direction === 'left') {
                 if (
-                        (pacY-20 === wallY)
+                        (wallY < pacY && pacY < (wallY + 40))
                         &&
                         (pacX-20 === wallX)
                         &&
                         (wallDirection === 'v')
                     ) {
-                    console.log("y's ",pacY - 20," ",wallY);
-                    console.log("x's ",pacX - 20," ",wallX);
+                    //console.log("y's ",pacY - 20," ",wallY);
+                    //console.log("x's ",pacX - 20," ",wallX);
                     return false;
                 }
             }
             else if (direction === 'right') {
                 if (
-                        (pacY-20 === wallY)
+                        (wallY < pacY && pacY < (wallY + 40))
                         &&
                         (pacX+20 === wallX)
                         &&
                         (wallDirection === 'v')
                     ) {
-                    console.log("y's ",pacY - 20," ",wallY+20);
-                    console.log("x's ",pacX + 20," ",wallX);
+                    //console.log("y's ",pacY - 20," ",wallY+20);
+                    //console.log("x's ",pacX + 20," ",wallX);
                     return false;
                 }
             }
@@ -141,6 +141,9 @@ var PacManGame = function(canvas){
     
     this.showScore = function(){
         $('#score span').text(this.score)
+    }
+    this.showLives = function(){
+        $('#lives span').text(this.pacman.lives)
     }
     
     this.isOver = function(){

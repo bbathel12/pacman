@@ -5,8 +5,8 @@
     </head>
     <body>
         <canvas id="canvas" width="580" height="580" style=""></canvas>
-        <div id='score'>Score:<span></span></div>
-        
+        <div id='score'>Score: <span></span></div>
+        <div id='lives'>Lives: <span></span></div>
         <audio  id="chomp">
             <source src="assets/pacman_chomp.wav" type="audio/wav"></source>
         </audio>
@@ -37,6 +37,7 @@
                     chomp.play();
                     game.onADot();
                     game.showScore();
+                    game.showLives();
                     game.isOver();
                 }
             ,100)
