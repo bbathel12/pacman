@@ -11,7 +11,7 @@ var Dot = function(canvas,x,y,power){
             if (this.power) {
                 canvas.strokeStyle = 'white'
                 canvas.fillStyle   = 'white'
-                canvas.arc(x,y,7,0,Math.PI * 2)
+                canvas.arc(x,y,8,0,Math.PI * 2)
             }else{
                 canvas.strokeStyle = 'yellow'
                 canvas.fillStyle   = 'yellow'

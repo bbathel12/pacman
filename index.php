@@ -25,6 +25,7 @@
         <script type="text/javascript" src="PacManGame.js"></script>
         <script type="text/javascript" src="Level.js"></script>
         <script type="text/javascript" src="Dots.js"></script>
+        <script type="text/javascript" src="Ghost.js"></script>
         <script>
             var game = new PacManGame(c);
             /*var p = new PacMan();

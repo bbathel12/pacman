@@ -4,6 +4,11 @@ var PacManGame = function(canvas){
     this.pacman = new PacMan('brice',3,canvas);
     this.levels[0] = new level(canvas);
     this.score  = 0;
+    this.ghosts = [
+        new Ghost(canvas,'Amber','pink',[10+(40*6),10+(40*8)]),
+        new Ghost(canvas,'Brice','blue',[10+(40*5),10+(40*8)]),
+        new Ghost(canvas,'Andrew','orange',[10+(40*2),10+(40*1)]),
+    ]
     
     
     /* draws a black background */
@@ -20,6 +25,9 @@ var PacManGame = function(canvas){
         this.levels[level].draw();
         this.levels[level].drawDots();
         this.pacman.draw(0);
+        for(var i = 0; i < this.ghosts.length; i++){
+            this.ghosts[i].draw();
+        }
     }
     
     /*
