@@ -1,4 +1,4 @@
-var level = function(canvas){
+var level = function(canvas,dots,walls){
     this.dots       = [
         
         new Dot(canvas,70,30),
@@ -14,7 +14,7 @@ var level = function(canvas){
         new Dot(canvas,470,30),
         new Dot(canvas,510,30),
         new Dot(canvas,550,30),
-        new Dot(canvas,30, 70),
+        new Dot(canvas,30, 7250,2500),
         //new Dot(canvas,70 ,70),
         new Dot(canvas,110,70),
         //new Dot(canvas,150,70),
