@@ -4,10 +4,13 @@ var PacManGame = function(canvas){
     this.pacman = new PacMan('brice',3,canvas);
     this.levels[0] = new level(canvas);
     this.score  = 0;
+    var brice_pattern  = ['up','up','right','up','right','up','right','up','left','right','right','right','up','up','left','left','down','up','left'];
+    var andrew_pattern = ['none','right','up','left','left','left','left','left','down','down','right','down','left','down','down','left','left','down','up','right'];
+    var amber_pattern  = ['none','none','right','right','up','left','left','down','right','down','right','right','down','left','down','down','left','left','down','up','right'];
     this.ghosts = [
-        new Ghost(canvas,'Amber','pink',[10+(40*6),10+(40*8)]),
-        new Ghost(canvas,'Brice','blue',[10+(40*5),10+(40*8)]),
-        new Ghost(canvas,'Andrew','orange',[10+(40*2),10+(40*1)]),
+        new Ghost(canvas,'Amber','pink',[30+(40*5),30+(40*7)],amber_pattern),
+        new Ghost(canvas,'Brice','blue',[30+(40*7),30+(40*7)],brice_pattern),
+        new Ghost(canvas,'Andrew','orange',[30+(40*6),30+(40*7)],andrew_pattern),
     ]
     
     
@@ -46,6 +49,7 @@ var PacManGame = function(canvas){
                         game.drawLevel(0);
                         game.pacman.move('left')
                         game.onADot();
+                        game.onAGhost();
                     }
                 }
                 else if (event.keyCode == right) {
@@ -53,6 +57,7 @@ var PacManGame = function(canvas){
                         game.drawLevel(0);
                         game.pacman.move('right')
                         game.onADot();
+                        game.onAGhost();
                     }
                 }
                 else if (event.keyCode == down) {
@@ -60,6 +65,7 @@ var PacManGame = function(canvas){
                         game.drawLevel(0);
                         game.pacman.move('down')
                         game.onADot();
+                        game.onAGhost();
                     }
                 }
                 else if (event.keyCode == up) {
@@ -67,6 +73,7 @@ var PacManGame = function(canvas){
                         game.drawLevel(0);
                         game.pacman.move('up')
                         game.onADot();
+                        game.onAGhost();
                     }
                 }
                 
@@ -86,6 +93,27 @@ var PacManGame = function(canvas){
                     game.score += 30;
                     break;
             }
+        }
+    }
+    this.onAGhost = function(){
+        for (var i = 0; i < this.ghosts.length;i++){
+            if (
+                this.ghosts[i].position[0] == this.pacman.position[0]
+                &&
+                this.ghosts[i].position[1] == this.pacman.position[1]
+            ) {
+                this.pacman.die();
+                
+            }
+        }
+    }
+    this.onAPacman = function(ghost){
+        if (
+            ghost.position[0] === this.pacman.position[0]
+            &&
+            ghost.position[1] === this.pacman.position[1]
+        ) {
+            this.pacman.die();
         }
     }
     this.validMove = function(direction){
@@ -116,6 +144,7 @@ var PacManGame = function(canvas){
                         (pacX-20 === wallX)
                         &&
                         (wallDirection === 'h')
+                        
                     ) {
                     //console.log("y's ",pacY ," ",wallY);
                     //console.log("x's ",pacX ," ",wallX);
@@ -167,6 +196,106 @@ var PacManGame = function(canvas){
             canvas.fillText('You Win !!!!!',50,250)
         }
     }
+    
+    
+    
+    
+    
+    this.ghostMove = function(ghost,moves){
+        var ghostX,ghostY,wallX,wallY,direction
+            direction = ghost.pattern[moves];
+            for(var i = 0 ; i< this.levels[0].walls.length; i++){
+                ghostX = ghost.position[0];
+                ghostY = ghost.position[1];
+                wallX= this.levels[0].walls[i][0];
+                wallY= this.levels[0].walls[i][1];
+                wallDirection = this.levels[0].walls[i][2]
+                if (direction === 'down') {
+                    if (
+                            (wallY -20 === ghostY)
+                            &&
+                            ((wallX+1) <= ghostX && ghostX <= (wallX + 39))
+                            &&
+                            (wallDirection === 'h')
+                            
+                        ) {
+                        //console.log("y's ",ghostY + 20," ",wallY);
+                        //console.log("x's ",ghostX - 20," ",wallX);
+                        return false; 
+                    }
+                }
+                else if (direction === 'up') {
+                    if (
+                            (wallY < ghostY && ghostY < wallY + 40 )
+                            &&
+                            (ghostX-20 === wallX)
+                            &&
+                            (wallDirection === 'h')
+                            
+                        ) {
+                        //console.log("y's ",ghostY ," ",wallY);
+                        //console.log("x's ",ghostX ," ",wallX);
+                        return false;
+                    }
+                }
+                else if (direction === 'left') {
+                    if (
+                            (wallY < ghostY && ghostY < (wallY + 40))
+                            &&
+                            (ghostX-20 === wallX)
+                            &&
+                            (wallDirection === 'v')
+                           
+                        ) {
+                        //console.log("y's ",ghostY - 20," ",wallY);
+                        //console.log("x's ",ghostX - 20," ",wallX);
+                        return false;
+                    }
+                }
+                else if (direction === 'right') {
+                    if (
+                            (wallY < ghostY && ghostY < (wallY + 40))
+                            &&
+                            (ghostX+20 === wallX)
+                            &&
+                            (wallDirection === 'v')
+                            
+                        ) {
+                        //console.log("y's ",ghostY - 20," ",wallY+20);
+                        //console.log("x's ",ghostX + 20," ",wallX);
+                        return false;
+                    }
+                }
+                
+            }
+            if(this.noGhost(ghost,direction)){
+                ghost.move(direction);
+            }
+    }
+    
+    this.noGhost = function(ghost,direction){
+        var offsetX,offsetY
+        switch (direction) {
+            case 'left' : offsetX = -40; offsetY = 0;break;
+            case 'right': offsetX = +40; offsetY = 0;break;
+            case 'down' : offsetX = 0  ; offsetY = 40;break;
+            case 'up'   : offsetX = 0  ; offsetY =-40;break;
+        }
+        for(var number = 0;number < this.ghosts.length ;number++){
+            if (
+                (ghost.name != game.ghosts[number].name)
+                &&
+                ((ghost.position[0] + offsetX )== this.ghosts[number].position[0])
+                &&
+                ((ghost.position[1] + offsetY) == this.ghosts[number].position[1])
+            )
+            {
+                return false;
+            }
+            
+        }return true;
+    }
+    
     
     this.drawLevel(0);
     this.pacman.draw(canvas);

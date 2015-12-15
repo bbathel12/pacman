@@ -1,13 +1,13 @@
-Ghost = function(canvas,name,color,position){
+Ghost = function(canvas,name,color,position,pattern){
     
     this.name     = name || 'blinky'
-    this.position = position || [250,250]
-    
-    
-    
+    this.position = position || [30+(40*5),30+(40*7)]
+    this.diameter = 40;
+    this.color    = color;
+    this.pattern  = pattern || ['up','up','right','up','right','up','right','up','left','right','right','right','up','up','left','left','down','up','left']
     this.draw = function(){
-        var x = this.position[0]+20;
-        var y = this.position[1]-20;
+        var x = this.position[0];
+        var y = this.position[1];
         canvas.beginPath()
         canvas.strokeStyle = color;
         canvas.fillStyle   = color;
@@ -19,7 +19,7 @@ Ghost = function(canvas,name,color,position){
         canvas.lineTo(x-5,y+5)
         canvas.lineTo(x-10,y+10);
         canvas.lineTo(x-10,y);
-        /*canvas.lineTo(x-5,y+20);
+        /*canvas.lineTo(x-5x ,y,y+20);
         canvas.lineTo(x-10,y+25);
         canvas.lineTo(x-15,y+20);
         canvas.lineTo(x-20,y+25);
@@ -51,6 +51,42 @@ Ghost = function(canvas,name,color,position){
         canvas.beginPath();
         canvas.arc(x - 5, y - 3, 2, 0, Math.PI * 2 )
         canvas.fill();
+    }
+    
+    
+    this.move = function(direction){
+        var x = this.position[0];
+        var y = this.position[1];
+        //console.log('x: ',x,'y: ',y)
+        if (direction == 'right' ) {
+            x = (x + this.diameter) % 580
+            x = x < 30 ? 30 : x;
+            this.draw( x ,y );
+            this.position[0] = x;
+        }
+        else if(direction == 'left'){
+            if (x - this.diameter < 0) {
+                x = 590;
+            }
+            x -= this.diameter
+            this.draw(x ,y);
+            this.position[0] = x;
+        }
+        else if(direction == 'down'){
+            y = ( y + this.diameter ) % 580
+            y = y < 30 ? 30 : y;
+            this.draw( x,y );
+            this.position[1] = y
+        }
+        else if(direction == 'up'){
+            if (y - this.diameter < 0) {
+                y = 590;
+            }
+            y -= this.diameter
+            this.draw( x, y );
+            this.position[1] = y
+        }
+        
     }
     
 }

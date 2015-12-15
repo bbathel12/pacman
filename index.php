@@ -31,7 +31,10 @@
             /*var p = new PacMan();
             p.draw(c);*/
             $(document).keydown(function(event){game.moveHandler(event)})
-            var chomp = document.getElementById('chomp'); 
+            var chomp = document.getElementById('chomp');
+            var moves1 = 0;
+            var moves2 = 0;
+            var moves3 = 0;
             var frames = setInterval(
                 function(){
                     game.drawLevel(0);
@@ -39,8 +42,30 @@
                     game.showScore();
                     game.showLives();
                     game.isOver();
+                    
                 }
             ,100)
+            var ghostMoves = setInterval(
+                
+                function () {
+                    if (game) {
+                        moves1 = (moves1 + 1 )% game.ghosts[0].pattern.length
+                        moves2 = (moves2 + 1 )% game.ghosts[1].pattern.length
+                        moves3 = (moves3 + 1 )% game.ghosts[2].pattern.length
+                        game.ghostMove(game.ghosts[0],moves1/*,[game.ghosts[1],game.ghosts[2]]*/);
+                        game.onAPacman(game.ghosts[0]);
+                        game.ghostMove(game.ghosts[1],moves1/*,[game.ghosts[0],game.ghosts[2]]*/);
+                        game.onAPacman(game.ghosts[1]);
+                        game.ghostMove(game.ghosts[2],moves1/*,[game.ghosts[1],game.ghosts[0]]*/);
+                        game.onAPacman(game.ghosts[2]);
+                        if (moves1 >= 4) {
+                            game.levels[0].walls.push([10+(40*7),10+(40*7),'h'])
+                        }
+                    }
+                }
+                ,500
+            )
+            
         </script>
         
         <script>
